@@ -1,0 +1,7 @@
+src/
+.vscode/
+.prettierrc
+tsconfig.json
+tsconfig.build.json
+jest.config.js
+*.tgz

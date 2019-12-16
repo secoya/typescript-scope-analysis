@@ -1,0 +1,23 @@
+{
+	"name": "@secoya/typescript-scope-analysis",
+	"version": "1.0.0",
+	"description": "",
+	"main": "lib/index.js",
+	"scripts": {
+		"prepublishOnly": "npm run build",
+		"build": "rm -rf lib/ && mkdir lib && tsc -p tsconfig.build.json",
+		"test": "jest"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/jest": "^24.0.23",
+		"jest": "^24.9.0",
+		"prettier": "1.19.1",
+		"ts-jest": "^24.2.0",
+		"typescript": "3.1.6"
+	},
+	"peerDependencies": {
+		"typescript": "^3.1.6"
+	}
+}
