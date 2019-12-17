@@ -41,7 +41,7 @@ function getScopeForNode(node: ts.Node): Scope {
 }
 
 function parseText(text: string): ts.SourceFile {
-	return ts.createSourceFile('test.ts', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+	return ts.createSourceFile('test.ts', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 }
 
 function findScopeNode(sourceFile: ts.SourceFile, functionName: string): ts.Node {
@@ -67,6 +67,111 @@ function findScopeNode(sourceFile: ts.SourceFile, functionName: string): ts.Node
 }
 
 describe('Simple tests', () => {
+	it('Can work correctly with JSX expressions', () => {
+		const sourceFile = parseText(`
+			const x = <MyXMLElement property={value} {...values} />;
+
+			const y = <>
+				<MyOtherElement property2={value2} {...values2}>
+					Text
+					{var}
+				</MyOtherElement>
+			</>;
+		`);
+
+		const scope = getScopeForNode(sourceFile);
+
+		scope.dangerousMutateToPrintFriendlyScope();
+		expect(scope).toMatchInlineSnapshot(`
+		Scope {
+		  "bindings": Map {
+		    "x" => Object {
+		      "bindingScopeKind": "LexicalScope",
+		      "declaringNode": null,
+		      "identifier": "x",
+		      "mutability": "Immutable",
+		      "references": null,
+		    },
+		    "y" => Object {
+		      "bindingScopeKind": "LexicalScope",
+		      "declaringNode": null,
+		      "identifier": "y",
+		      "mutability": "Immutable",
+		      "references": null,
+		    },
+		  },
+		  "childScopes": null,
+		  "declaratingNode": null,
+		  "parentScope": null,
+		  "references": Array [
+		    Object {
+		      "identifier": "MyXMLElement",
+		      "isInitializer": false,
+		      "referenceTo": null,
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "value",
+		      "isInitializer": false,
+		      "referenceTo": null,
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "values",
+		      "isInitializer": false,
+		      "referenceTo": null,
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "x",
+		      "isInitializer": true,
+		      "referenceTo": Object {},
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "MyOtherElement",
+		      "isInitializer": false,
+		      "referenceTo": null,
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "value2",
+		      "isInitializer": false,
+		      "referenceTo": null,
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "values2",
+		      "isInitializer": false,
+		      "referenceTo": null,
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "MyOtherElement",
+		      "isInitializer": false,
+		      "referenceTo": null,
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "y",
+		      "isInitializer": true,
+		      "referenceTo": Object {},
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		  ],
+		  "scopeKind": "FunctionScope",
+		}
+	`);
+	});
 	it('Understands various references', () => {
 		const sourceFile = parseText(`function Counter({ increment }) {
 			let [count, setCount] = useState(0);

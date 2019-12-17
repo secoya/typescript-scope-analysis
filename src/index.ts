@@ -502,6 +502,9 @@ function assignReferences(scopesMap: WeakMap<ts.Node, Scope>, sourceFile: ts.Sou
 		}
 		if (ts.isIdentifier(node) && collectReferences) {
 			const scope = getScope(node);
+			if (node.text == '') {
+				return;
+			}
 			if (initializer == null) {
 				scope.addReference(node, null, false);
 			} else {
@@ -609,6 +612,35 @@ function assignReferences(scopesMap: WeakMap<ts.Node, Scope>, sourceFile: ts.Sou
 		if (ts.isCaseClause(node)) {
 			visitNode(node.expression, true);
 			visitNode(node.statements, false);
+			return;
+		}
+
+		if (ts.isJsxOpeningElement(node)) {
+			console.log('opening HANS');
+			visitNode(node.tagName, true);
+			visitNode(node.attributes, false);
+			return;
+		}
+		if (ts.isJsxClosingElement(node)) {
+			visitNode(node.tagName, true);
+			return;
+		}
+		if (ts.isJsxSelfClosingElement(node)) {
+			visitNode(node.tagName, true);
+			visitNode(node.attributes, false);
+			return;
+		}
+		if (ts.isJsxExpression(node)) {
+			visitNode(node.expression, true);
+			return;
+		}
+		if (ts.isJsxAttribute(node)) {
+			visitNode(node.name, false);
+			visitNode(node.initializer, true);
+			return;
+		}
+		if (ts.isJsxSpreadAttribute(node)) {
+			visitNode(node.expression, true);
 			return;
 		}
 		ts.forEachChild(node, child => visitNode(child, collectReferences));
