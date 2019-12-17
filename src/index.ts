@@ -616,7 +616,6 @@ function assignReferences(scopesMap: WeakMap<ts.Node, Scope>, sourceFile: ts.Sou
 		}
 
 		if (ts.isJsxOpeningElement(node)) {
-			console.log('opening HANS');
 			visitNode(node.tagName, true);
 			visitNode(node.attributes, false);
 			return;
