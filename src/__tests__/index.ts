@@ -67,6 +67,50 @@ function findScopeNode(sourceFile: ts.SourceFile, functionName: string): ts.Node
 }
 
 describe('Simple tests', () => {
+	it('Can work correctly with object literals and references', () => {
+		const sourceFile = parseText(`
+			const x = {
+				id: 'value',
+				scrollTop: y,
+			};
+		`);
+		const scope = getScopeForNode(sourceFile);
+
+		scope.dangerousMutateToPrintFriendlyScope();
+		expect(scope).toMatchInlineSnapshot(`
+		Scope {
+		  "bindings": Map {
+		    "x" => Object {
+		      "bindingScopeKind": "LexicalScope",
+		      "declaringNode": null,
+		      "identifier": "x",
+		      "mutability": "Immutable",
+		      "references": null,
+		    },
+		  },
+		  "childScopes": null,
+		  "declaratingNode": null,
+		  "parentScope": null,
+		  "references": Array [
+		    Object {
+		      "identifier": "y",
+		      "isInitializer": false,
+		      "referenceTo": null,
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		    Object {
+		      "identifier": "x",
+		      "isInitializer": true,
+		      "referenceTo": Object {},
+		      "referencedFromScope": null,
+		      "writeExpr": null,
+		    },
+		  ],
+		  "scopeKind": "FunctionScope",
+		}
+	`);
+	});
 	it('Can work correctly with JSX expressions', () => {
 		const sourceFile = parseText(`
 			const x = <MyXMLElement property={value} {...values} />;
@@ -1883,20 +1927,6 @@ describe('Simple tests', () => {
 		      "writeExpr": null,
 		    },
 		    Object {
-		      "identifier": "asCopy",
-		      "isInitializer": false,
-		      "referenceTo": null,
-		      "referencedFromScope": null,
-		      "writeExpr": null,
-		    },
-		    Object {
-		      "identifier": "directoryInfo",
-		      "isInitializer": false,
-		      "referenceTo": null,
-		      "referencedFromScope": null,
-		      "writeExpr": null,
-		    },
-		    Object {
 		      "identifier": "directory",
 		      "isInitializer": false,
 		      "referenceTo": Object {},
@@ -1907,20 +1937,6 @@ describe('Simple tests', () => {
 		      "identifier": "file",
 		      "isInitializer": false,
 		      "referenceTo": Object {},
-		      "referencedFromScope": null,
-		      "writeExpr": null,
-		    },
-		    Object {
-		      "identifier": "file",
-		      "isInitializer": false,
-		      "referenceTo": Object {},
-		      "referencedFromScope": null,
-		      "writeExpr": null,
-		    },
-		    Object {
-		      "identifier": "retries",
-		      "isInitializer": false,
-		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },

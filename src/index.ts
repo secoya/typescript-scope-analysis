@@ -642,6 +642,17 @@ function assignReferences(scopesMap: WeakMap<ts.Node, Scope>, sourceFile: ts.Sou
 			visitNode(node.expression, true);
 			return;
 		}
+
+		if (ts.isPropertyAssignment(node)) {
+			visitNode(node.name, false);
+			visitNode(node.initializer, true);
+			return;
+		}
+
+		if (ts.isComputedPropertyName(node)) {
+			visitNode(node.expression, true);
+			return;
+		}
 		ts.forEachChild(node, child => visitNode(child, collectReferences));
 	};
 
