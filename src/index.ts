@@ -500,6 +500,9 @@ function assignReferences(scopesMap: WeakMap<ts.Node, Scope>, sourceFile: ts.Sou
 			node.forEach(n => visitNode(n, collectReferences));
 			return;
 		}
+		if (ts.isTypeNode(node)) {
+			return;
+		}
 		if (ts.isIdentifier(node) && collectReferences) {
 			const scope = getScope(node);
 			if (node.text == '') {

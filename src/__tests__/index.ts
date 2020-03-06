@@ -69,9 +69,9 @@ function findScopeNode(sourceFile: ts.SourceFile, functionName: string): ts.Node
 describe('Simple tests', () => {
 	it('Can work correctly with object literals and references', () => {
 		const sourceFile = parseText(`
-			const x = {
+			const x: typeof z = {
 				id: 'value',
-				scrollTop: y,
+				scrollTop: y as typeof z,
 			};
 		`);
 		const scope = getScopeForNode(sourceFile);
