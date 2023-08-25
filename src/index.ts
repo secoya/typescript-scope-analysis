@@ -67,27 +67,27 @@ export class Scope {
 	private readonly bindings: Map<string, ScopeBindingDeclaration>;
 	private readonly parentScope: Scope | null;
 	private readonly childScopes: Scope[];
-	private readonly declaratingNode: ts.Node;
+	private readonly declaringNode: ts.Node;
 
 	private readonly references: ScopeReference[];
 
-	public constructor(scopeKind: ScopeKind, declaratingNode: ts.Node, parentScope: Scope | null) {
+	public constructor(scopeKind: ScopeKind, declaringNode: ts.Node, parentScope: Scope | null) {
 		this.scopeKind = scopeKind;
 		this.bindings = new Map();
 		this.parentScope = parentScope;
-		this.declaratingNode = declaratingNode;
+		this.declaringNode = declaringNode;
 		this.childScopes = [];
 		this.references = [];
 	}
 
 	public dangerousMutateToPrintFriendlyScope(): void {
-		this.bindings.forEach(binding => {
+		this.bindings.forEach((binding) => {
 			(binding as any).declaringNode = null;
 			(binding as any).references = null;
 		});
-		(this as any).declaratingNode = null;
+		(this as any).declaringNode = null;
 		(this as any).childScopes = null;
-		this.references.forEach(ref => {
+		this.references.forEach((ref) => {
 			(ref as any).identifier = ref.identifier.text;
 			if (ref.referenceTo != null) {
 				(ref as any).referenceTo = {};
@@ -145,14 +145,14 @@ export class Scope {
 		return this.getOwnFunctionScopeBinding(name) != null;
 	}
 
-	public newChildScope(scopeKind: ScopeKind, declaratingNode: ts.Node): Scope {
-		const childScope = new Scope(scopeKind, declaratingNode, this);
+	public newChildScope(scopeKind: ScopeKind, declaringNode: ts.Node): Scope {
+		const childScope = new Scope(scopeKind, declaringNode, this);
 		this.childScopes.push(childScope);
 		return childScope;
 	}
 
 	public getDeclaringNode(): ts.Node {
-		return this.declaratingNode;
+		return this.declaringNode;
 	}
 
 	public addBinding(name: string, declaration: ScopeBindingDeclaration) {
@@ -196,7 +196,7 @@ export class Scope {
 			...this.getReferences(),
 			...Array.prototype.concat.apply(
 				[],
-				this.childScopes.map(s => s.getAllReferencesRecursively()),
+				this.childScopes.map((s) => s.getAllReferencesRecursively()),
 			),
 		];
 	}
@@ -209,11 +209,11 @@ export class Scope {
 function findScopes(sourceFile: ts.SourceFile): WeakMap<ts.Node, Scope> {
 	const result: WeakMap<ts.Node, Scope> = new WeakMap();
 	const visitAllChildren = (node: ts.Node, scope: Scope) => {
-		ts.forEachChild(node, child => visitNode(child, scope));
+		ts.forEachChild(node, (child) => visitNode(child, scope));
 	};
 	const addAllChildren = (node: ts.Node, scope: Scope) => {
 		// Arrow function uses a statement form here to avoid forEachChild from returning early
-		ts.forEachChild(node, child => {
+		ts.forEachChild(node, (child) => {
 			result.set(child, scope);
 		});
 	};
@@ -234,9 +234,9 @@ function findScopes(sourceFile: ts.SourceFile): WeakMap<ts.Node, Scope> {
 				references: [],
 			});
 		} else if (ts.isObjectBindingPattern(bindingName)) {
-			bindingName.elements.forEach(el => visitBindingElement(el, decl, scope, scopeKind, mutability));
+			bindingName.elements.forEach((el) => visitBindingElement(el, decl, scope, scopeKind, mutability));
 		} else if (ts.isArrayBindingPattern(bindingName)) {
-			bindingName.elements.forEach(el => visitArrayBindingElement(el, decl, scope, scopeKind, mutability));
+			bindingName.elements.forEach((el) => visitArrayBindingElement(el, decl, scope, scopeKind, mutability));
 		}
 	};
 	const visitArrayBindingElement = (
@@ -273,18 +273,18 @@ function findScopes(sourceFile: ts.SourceFile): WeakMap<ts.Node, Scope> {
 				references: [],
 			});
 		} else if (ts.isObjectBindingPattern(paramDecl.name)) {
-			paramDecl.name.elements.forEach(el =>
+			paramDecl.name.elements.forEach((el) =>
 				visitBindingElement(el, paramDecl, scope, ScopeKind.FunctionScope, Mutability.Mutable),
 			);
 		} else {
-			paramDecl.name.elements.forEach(el =>
+			paramDecl.name.elements.forEach((el) =>
 				visitArrayBindingElement(el, paramDecl, scope, ScopeKind.FunctionScope, Mutability.Mutable),
 			);
 		}
 	};
 
 	const visitFunctionLike = (functionLike: ts.FunctionLike, scope: Scope): void => {
-		// Walk through every initial child - in a non resursive manner to add them to the result map
+		// Walk through every initial child - in a non recursive manner to add them to the result map
 		// with a default scope. We then "hope" to override these with more specific scopes later
 		addAllChildren(functionLike, scope);
 		visitOptionalNodes(functionLike.typeParameters, scope);
@@ -310,7 +310,7 @@ function findScopes(sourceFile: ts.SourceFile): WeakMap<ts.Node, Scope> {
 
 		// Visit parameters under current scope, collecting bindings as we go
 		const functionScope = scope.newChildScope(ScopeKind.FunctionScope, functionLike);
-		functionLike.parameters.forEach(node => {
+		functionLike.parameters.forEach((node) => {
 			visitParameterDeclaration(node, functionScope);
 		});
 
@@ -338,7 +338,7 @@ function findScopes(sourceFile: ts.SourceFile): WeakMap<ts.Node, Scope> {
 	};
 
 	/**
-	 * This recursives through the AST. We add the visited node to the current scope
+	 * This recurses through the AST. We add the visited node to the current scope
 	 * and then if there's no special handling we recurse through all children.
 	 * All nodes in the AST should be added to the map
 	 */
@@ -379,7 +379,7 @@ function findScopes(sourceFile: ts.SourceFile): WeakMap<ts.Node, Scope> {
 						references: [],
 					});
 				} else {
-					node.namedBindings.elements.forEach(el => {
+					node.namedBindings.elements.forEach((el) => {
 						scope.addBinding(el.name.text, {
 							mutability: Mutability.Immutable,
 							declaringNode: el,
@@ -471,7 +471,7 @@ function findScopes(sourceFile: ts.SourceFile): WeakMap<ts.Node, Scope> {
 		if (nodes == null) {
 			return;
 		}
-		nodes.forEach(node => visitNode(node, scope));
+		nodes.forEach((node) => visitNode(node, scope));
 	};
 
 	visitNode(sourceFile, new Scope(ScopeKind.FunctionScope, sourceFile, null));
@@ -497,7 +497,7 @@ function assignReferences(scopesMap: WeakMap<ts.Node, Scope>, sourceFile: ts.Sou
 			return;
 		}
 		if (isNodeArray(node)) {
-			node.forEach(n => visitNode(n, collectReferences));
+			node.forEach((n) => visitNode(n, collectReferences));
 			return;
 		}
 		if (ts.isTypeNode(node)) {
@@ -656,7 +656,7 @@ function assignReferences(scopesMap: WeakMap<ts.Node, Scope>, sourceFile: ts.Sou
 			visitNode(node.expression, true);
 			return;
 		}
-		ts.forEachChild(node, child => visitNode(child, collectReferences));
+		ts.forEachChild(node, (child) => visitNode(child, collectReferences));
 	};
 
 	visitNode(sourceFile, false);

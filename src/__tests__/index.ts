@@ -7,7 +7,7 @@ function allNodesDefined(node: ts.Node, scopesContainer: SourceFileScopesContain
 	} catch (e) {
 		failAtNode(node, 'No scope found for node');
 	}
-	ts.forEachChild(node, child => allNodesDefined(child, scopesContainer));
+	ts.forEachChild(node, (child) => allNodesDefined(child, scopesContainer));
 }
 
 function failAtNode(node: ts.Node, msg: string): never {
@@ -80,7 +80,7 @@ describe('Simple tests', () => {
 		expect(scope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "x" => Object {
+		    "x" => {
 		      "bindingScopeKind": "LexicalScope",
 		      "declaringNode": null,
 		      "identifier": "x",
@@ -89,20 +89,20 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": null,
-		  "references": Array [
-		    Object {
+		  "references": [
+		    {
 		      "identifier": "y",
 		      "isInitializer": false,
 		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "x",
 		      "isInitializer": true,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
@@ -129,14 +129,14 @@ describe('Simple tests', () => {
 		expect(scope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "x" => Object {
+		    "x" => {
 		      "bindingScopeKind": "LexicalScope",
 		      "declaringNode": null,
 		      "identifier": "x",
 		      "mutability": "Immutable",
 		      "references": null,
 		    },
-		    "y" => Object {
+		    "y" => {
 		      "bindingScopeKind": "LexicalScope",
 		      "declaringNode": null,
 		      "identifier": "y",
@@ -145,69 +145,69 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": null,
-		  "references": Array [
-		    Object {
+		  "references": [
+		    {
 		      "identifier": "MyXMLElement",
 		      "isInitializer": false,
 		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "value",
 		      "isInitializer": false,
 		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "values",
 		      "isInitializer": false,
 		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "x",
 		      "isInitializer": true,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "MyOtherElement",
 		      "isInitializer": false,
 		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "value2",
 		      "isInitializer": false,
 		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "values2",
 		      "isInitializer": false,
 		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "MyOtherElement",
 		      "isInitializer": false,
 		      "referenceTo": null,
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "y",
 		      "isInitializer": true,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
@@ -237,7 +237,7 @@ describe('Simple tests', () => {
 		expect(functionScope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "X" => Object {
+		    "X" => {
 		      "bindingScopeKind": "LexicalScope",
 		      "declaringNode": null,
 		      "identifier": "X",
@@ -246,10 +246,10 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "id" => Object {
+		      "id" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "id",
@@ -258,24 +258,24 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": Scope {
 		      "bindings": Map {
-		        "increment" => Object {
+		        "increment" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "increment",
 		          "mutability": "Mutable",
 		          "references": null,
 		        },
-		        "count" => Object {
+		        "count" => {
 		          "bindingScopeKind": "LexicalScope",
 		          "declaringNode": null,
 		          "identifier": "count",
 		          "mutability": "Mutable",
 		          "references": null,
 		        },
-		        "setCount" => Object {
+		        "setCount" => {
 		          "bindingScopeKind": "LexicalScope",
 		          "declaringNode": null,
 		          "identifier": "setCount",
@@ -284,10 +284,10 @@ describe('Simple tests', () => {
 		        },
 		      },
 		      "childScopes": null,
-		      "declaratingNode": null,
+		      "declaringNode": null,
 		      "parentScope": Scope {
 		        "bindings": Map {
-		          "Counter" => Object {
+		          "Counter" => {
 		            "bindingScopeKind": "LexicalScope",
 		            "declaringNode": null,
 		            "identifier": "Counter",
@@ -296,34 +296,34 @@ describe('Simple tests', () => {
 		          },
 		        },
 		        "childScopes": null,
-		        "declaratingNode": null,
+		        "declaringNode": null,
 		        "parentScope": null,
-		        "references": Array [],
+		        "references": [],
 		        "scopeKind": "FunctionScope",
 		      },
-		      "references": Array [
-		        Object {
+		      "references": [
+		        {
 		          "identifier": "useState",
 		          "isInitializer": false,
 		          "referenceTo": null,
 		          "referencedFromScope": null,
 		          "writeExpr": null,
 		        },
-		        Object {
+		        {
 		          "identifier": "count",
 		          "isInitializer": false,
-		          "referenceTo": Object {},
+		          "referenceTo": {},
 		          "referencedFromScope": null,
 		          "writeExpr": null,
 		        },
-		        Object {
+		        {
 		          "identifier": "setCount",
 		          "isInitializer": false,
-		          "referenceTo": Object {},
+		          "referenceTo": {},
 		          "referencedFromScope": null,
 		          "writeExpr": null,
 		        },
-		        Object {
+		        {
 		          "identifier": "useEffect",
 		          "isInitializer": false,
 		          "referenceTo": null,
@@ -333,29 +333,29 @@ describe('Simple tests', () => {
 		      ],
 		      "scopeKind": "FunctionScope",
 		    },
-		    "references": Array [
-		      Object {
+		    "references": [
+		      {
 		        "identifier": "setInterval",
 		        "isInitializer": false,
 		        "referenceTo": null,
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
-		      Object {
+		      {
 		        "identifier": "id",
 		        "isInitializer": true,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
 		    ],
 		    "scopeKind": "FunctionScope",
 		  },
-		  "references": Array [
-		    Object {
+		  "references": [
+		    {
 		      "identifier": "setCount",
 		      "isInitializer": false,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
@@ -383,7 +383,7 @@ describe('Simple tests', () => {
 		expect(functionScope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "testFunction" => Object {
+		    "testFunction" => {
 		      "bindingScopeKind": "LexicalScope",
 		      "declaringNode": null,
 		      "identifier": "testFunction",
@@ -392,17 +392,17 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "prop" => Object {
+		      "prop" => {
 		        "bindingScopeKind": "FunctionScope",
 		        "declaringNode": null,
 		        "identifier": "prop",
 		        "mutability": "Mutable",
 		        "references": null,
 		      },
-		      "foo" => Object {
+		      "foo" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "foo",
@@ -411,10 +411,10 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": Scope {
 		      "bindings": Map {
-		        "Example" => Object {
+		        "Example" => {
 		          "bindingScopeKind": "LexicalScope",
 		          "declaringNode": null,
 		          "identifier": "Example",
@@ -423,41 +423,41 @@ describe('Simple tests', () => {
 		        },
 		      },
 		      "childScopes": null,
-		      "declaratingNode": null,
+		      "declaringNode": null,
 		      "parentScope": null,
-		      "references": Array [],
+		      "references": [],
 		      "scopeKind": "FunctionScope",
 		    },
-		    "references": Array [
-		      Object {
+		    "references": [
+		      {
 		        "identifier": "useCallback",
 		        "isInitializer": false,
 		        "referenceTo": null,
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
-		      Object {
+		      {
 		        "identifier": "prop",
 		        "isInitializer": false,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
-		      Object {
+		      {
 		        "identifier": "foo",
 		        "isInitializer": true,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
 		    ],
 		    "scopeKind": "FunctionScope",
 		  },
-		  "references": Array [
-		    Object {
+		  "references": [
+		    {
 		      "identifier": "prop",
 		      "isInitializer": false,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
@@ -476,14 +476,14 @@ describe('Simple tests', () => {
 		expect(functionScope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "y" => Object {
+		    "y" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "y",
 		      "mutability": "Mutable",
 		      "references": null,
 		    },
-		    "x" => Object {
+		    "x" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "x",
@@ -492,24 +492,24 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "x" => Object {
+		      "x" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "x",
 		        "mutability": "Immutable",
 		        "references": null,
 		      },
-		      "z" => Object {
+		      "z" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "z",
 		        "mutability": "Immutable",
 		        "references": null,
 		      },
-		      "myFunction" => Object {
+		      "myFunction" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "myFunction",
@@ -518,38 +518,38 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": null,
-		    "references": Array [
-		      Object {
+		    "references": [
+		      {
 		        "identifier": "x",
 		        "isInitializer": false,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
-		      Object {
+		      {
 		        "identifier": "z",
 		        "isInitializer": false,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
 		    ],
 		    "scopeKind": "FunctionScope",
 		  },
-		  "references": Array [
-		    Object {
+		  "references": [
+		    {
 		      "identifier": "x",
 		      "isInitializer": false,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "y",
 		      "isInitializer": false,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
@@ -567,14 +567,14 @@ describe('Simple tests', () => {
 		expect(functionScope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "y" => Object {
+		    "y" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "y",
 		      "mutability": "Mutable",
 		      "references": null,
 		    },
-		    "args" => Object {
+		    "args" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "args",
@@ -583,10 +583,10 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "this" => Object {
+		      "this" => {
 		        "bindingScopeKind": "FunctionScope",
 		        "declaringNode": null,
 		        "identifier": "this",
@@ -595,10 +595,10 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": Scope {
 		      "bindings": Map {
-		        "MyClass" => Object {
+		        "MyClass" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "MyClass",
@@ -607,15 +607,15 @@ describe('Simple tests', () => {
 		        },
 		      },
 		      "childScopes": null,
-		      "declaratingNode": null,
+		      "declaringNode": null,
 		      "parentScope": null,
-		      "references": Array [],
+		      "references": [],
 		      "scopeKind": "FunctionScope",
 		    },
-		    "references": Array [],
+		    "references": [],
 		    "scopeKind": "FunctionScope",
 		  },
-		  "references": Array [],
+		  "references": [],
 		  "scopeKind": "FunctionScope",
 		}
 	`);
@@ -632,17 +632,17 @@ describe('Simple tests', () => {
 		Scope {
 		  "bindings": Map {},
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "i" => Object {
+		      "i" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "i",
 		        "mutability": "Mutable",
 		        "references": null,
 		      },
-		      "myFunction" => Object {
+		      "myFunction" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "myFunction",
@@ -651,27 +651,27 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": Scope {
 		      "bindings": Map {},
 		      "childScopes": null,
-		      "declaratingNode": null,
+		      "declaringNode": null,
 		      "parentScope": null,
-		      "references": Array [],
+		      "references": [],
 		      "scopeKind": "FunctionScope",
 		    },
-		    "references": Array [
-		      Object {
+		    "references": [
+		      {
 		        "identifier": "i",
 		        "isInitializer": true,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
 		    ],
 		    "scopeKind": "LexicalScope",
 		  },
-		  "references": Array [],
+		  "references": [],
 		  "scopeKind": "FunctionScope",
 		}
 	`);
@@ -688,17 +688,17 @@ describe('Simple tests', () => {
 		Scope {
 		  "bindings": Map {},
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "i" => Object {
+		      "i" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "i",
 		        "mutability": "Mutable",
 		        "references": null,
 		      },
-		      "myFunction" => Object {
+		      "myFunction" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "myFunction",
@@ -707,14 +707,14 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": Scope {
 		      "bindings": Map {},
 		      "childScopes": null,
-		      "declaratingNode": null,
+		      "declaringNode": null,
 		      "parentScope": null,
-		      "references": Array [
-		        Object {
+		      "references": [
+		        {
 		          "identifier": "y",
 		          "isInitializer": false,
 		          "referenceTo": null,
@@ -724,18 +724,18 @@ describe('Simple tests', () => {
 		      ],
 		      "scopeKind": "FunctionScope",
 		    },
-		    "references": Array [
-		      Object {
+		    "references": [
+		      {
 		        "identifier": "i",
 		        "isInitializer": false,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
 		    ],
 		    "scopeKind": "LexicalScope",
 		  },
-		  "references": Array [],
+		  "references": [],
 		  "scopeKind": "FunctionScope",
 		}
 	`);
@@ -752,17 +752,17 @@ describe('Simple tests', () => {
 		Scope {
 		  "bindings": Map {},
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "i" => Object {
+		      "i" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "i",
 		        "mutability": "Mutable",
 		        "references": null,
 		      },
-		      "myFunction" => Object {
+		      "myFunction" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "myFunction",
@@ -771,14 +771,14 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": Scope {
 		      "bindings": Map {},
 		      "childScopes": null,
-		      "declaratingNode": null,
+		      "declaringNode": null,
 		      "parentScope": null,
-		      "references": Array [
-		        Object {
+		      "references": [
+		        {
 		          "identifier": "y",
 		          "isInitializer": false,
 		          "referenceTo": null,
@@ -788,18 +788,18 @@ describe('Simple tests', () => {
 		      ],
 		      "scopeKind": "FunctionScope",
 		    },
-		    "references": Array [
-		      Object {
+		    "references": [
+		      {
 		        "identifier": "i",
 		        "isInitializer": false,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
 		    ],
 		    "scopeKind": "LexicalScope",
 		  },
-		  "references": Array [],
+		  "references": [],
 		  "scopeKind": "FunctionScope",
 		}
 	`);
@@ -813,7 +813,7 @@ describe('Simple tests', () => {
 		expect(scope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "x" => Object {
+		    "x" => {
 		      "bindingScopeKind": "LexicalScope",
 		      "declaringNode": null,
 		      "identifier": "x",
@@ -822,13 +822,13 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": null,
-		  "references": Array [
-		    Object {
+		  "references": [
+		    {
 		      "identifier": "x",
 		      "isInitializer": true,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
@@ -847,10 +847,10 @@ describe('Simple tests', () => {
 		Scope {
 		  "bindings": Map {},
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "myFunction" => Object {
+		      "myFunction" => {
 		        "bindingScopeKind": "LexicalScope",
 		        "declaringNode": null,
 		        "identifier": "myFunction",
@@ -859,10 +859,10 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": Scope {
 		      "bindings": Map {
-		        "i" => Object {
+		        "i" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "i",
@@ -871,23 +871,23 @@ describe('Simple tests', () => {
 		        },
 		      },
 		      "childScopes": null,
-		      "declaratingNode": null,
+		      "declaringNode": null,
 		      "parentScope": null,
-		      "references": Array [],
+		      "references": [],
 		      "scopeKind": "FunctionScope",
 		    },
-		    "references": Array [
-		      Object {
+		    "references": [
+		      {
 		        "identifier": "i",
 		        "isInitializer": true,
-		        "referenceTo": Object {},
+		        "referenceTo": {},
 		        "referencedFromScope": null,
 		        "writeExpr": null,
 		      },
 		    ],
 		    "scopeKind": "LexicalScope",
 		  },
-		  "references": Array [],
+		  "references": [],
 		  "scopeKind": "FunctionScope",
 		}
 	`);
@@ -903,28 +903,28 @@ describe('Simple tests', () => {
 		expect(scope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "ts" => Object {
+		    "ts" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "ts",
 		      "mutability": "Immutable",
 		      "references": null,
 		    },
-		    "peter" => Object {
+		    "peter" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "peter",
 		      "mutability": "Immutable",
 		      "references": null,
 		    },
-		    "yolo" => Object {
+		    "yolo" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "yolo",
 		      "mutability": "Immutable",
 		      "references": null,
 		    },
-		    "swagger" => Object {
+		    "swagger" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "swagger",
@@ -933,9 +933,9 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": null,
-		  "references": Array [],
+		  "references": [],
 		  "scopeKind": "FunctionScope",
 		}
 	`);
@@ -1547,28 +1547,28 @@ describe('Simple tests', () => {
 		expect(scope).toMatchInlineSnapshot(`
 		Scope {
 		  "bindings": Map {
-		    "file" => Object {
+		    "file" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "file",
 		      "mutability": "Mutable",
 		      "references": null,
 		    },
-		    "directoryId" => Object {
+		    "directoryId" => {
 		      "bindingScopeKind": "FunctionScope",
 		      "declaringNode": null,
 		      "identifier": "directoryId",
 		      "mutability": "Mutable",
 		      "references": null,
 		    },
-		    "directory" => Object {
+		    "directory" => {
 		      "bindingScopeKind": "LexicalScope",
 		      "declaringNode": null,
 		      "identifier": "directory",
 		      "mutability": "Immutable",
 		      "references": null,
 		    },
-		    "data" => Object {
+		    "data" => {
 		      "bindingScopeKind": "LexicalScope",
 		      "declaringNode": null,
 		      "identifier": "data",
@@ -1577,10 +1577,10 @@ describe('Simple tests', () => {
 		    },
 		  },
 		  "childScopes": null,
-		  "declaratingNode": null,
+		  "declaringNode": null,
 		  "parentScope": Scope {
 		    "bindings": Map {
-		      "this" => Object {
+		      "this" => {
 		        "bindingScopeKind": "FunctionScope",
 		        "declaringNode": null,
 		        "identifier": "this",
@@ -1589,276 +1589,276 @@ describe('Simple tests', () => {
 		      },
 		    },
 		    "childScopes": null,
-		    "declaratingNode": null,
+		    "declaringNode": null,
 		    "parentScope": Scope {
 		      "bindings": Map {
-		        "MutationManagerFetchNamedEntity" => Object {
+		        "MutationManagerFetchNamedEntity" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "MutationManagerFetchNamedEntity",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "WebKitDirectoryEntry" => Object {
+		        "WebKitDirectoryEntry" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "WebKitDirectoryEntry",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "WebKitEntry" => Object {
+		        "WebKitEntry" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "WebKitEntry",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "WebKitFileEntry" => Object {
+		        "WebKitFileEntry" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "WebKitFileEntry",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "makeActionHandler" => Object {
+		        "makeActionHandler" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "makeActionHandler",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "ActionHandler" => Object {
+		        "ActionHandler" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "ActionHandler",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "ActionHandlerData" => Object {
+		        "ActionHandlerData" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "ActionHandlerData",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "FileChangedData" => Object {
+		        "FileChangedData" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "FileChangedData",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "FileChangedKind" => Object {
+		        "FileChangedKind" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "FileChangedKind",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "CreateDirectoryAction" => Object {
+		        "CreateDirectoryAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "CreateDirectoryAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "DeleteDirectoryAction" => Object {
+		        "DeleteDirectoryAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "DeleteDirectoryAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "DeleteFileAction" => Object {
+		        "DeleteFileAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "DeleteFileAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "DeleteFileData" => Object {
+		        "DeleteFileData" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "DeleteFileData",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "MoveDirectoryAction" => Object {
+		        "MoveDirectoryAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "MoveDirectoryAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "MoveDirectoryData" => Object {
+		        "MoveDirectoryData" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "MoveDirectoryData",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "MoveFileAction" => Object {
+		        "MoveFileAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "MoveFileAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "MoveFileData" => Object {
+		        "MoveFileData" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "MoveFileData",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "RenameDirectoryAction" => Object {
+		        "RenameDirectoryAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "RenameDirectoryAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "RenameFileAction" => Object {
+		        "RenameFileAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "RenameFileAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "UploadDirectoryAction" => Object {
+		        "UploadDirectoryAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "UploadDirectoryAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "UploadFileAction" => Object {
+		        "UploadFileAction" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "UploadFileAction",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "UploadFileData" => Object {
+		        "UploadFileData" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "UploadFileData",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "ConflictInfo" => Object {
+		        "ConflictInfo" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "ConflictInfo",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "IDBasedEventEmitter" => Object {
+		        "IDBasedEventEmitter" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "IDBasedEventEmitter",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "JobInfo" => Object {
+		        "JobInfo" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "JobInfo",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "MultiQueue" => Object {
+		        "MultiQueue" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "MultiQueue",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "BrowsableFileInfo" => Object {
+		        "BrowsableFileInfo" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "BrowsableFileInfo",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "DirectoryInfo" => Object {
+		        "DirectoryInfo" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "DirectoryInfo",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "RecordStoreHelper" => Object {
+		        "RecordStoreHelper" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "RecordStoreHelper",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "Notifications" => Object {
+		        "Notifications" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "Notifications",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "DirectoryContentOrdering" => Object {
+		        "DirectoryContentOrdering" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "DirectoryContentOrdering",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "Relay" => Object {
+		        "Relay" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "Relay",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "Signal" => Object {
+		        "Signal" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "Signal",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "MANAGER_DISPOSED_ERROR" => Object {
+		        "MANAGER_DISPOSED_ERROR" => {
 		          "bindingScopeKind": "LexicalScope",
 		          "declaringNode": null,
 		          "identifier": "MANAGER_DISPOSED_ERROR",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "notes" => Object {
+		        "notes" => {
 		          "bindingScopeKind": "LexicalScope",
 		          "declaringNode": null,
 		          "identifier": "notes",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "SECOND" => Object {
+		        "SECOND" => {
 		          "bindingScopeKind": "LexicalScope",
 		          "declaringNode": null,
 		          "identifier": "SECOND",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "readWebkitEntriesAsync" => Object {
+		        "readWebkitEntriesAsync" => {
 		          "bindingScopeKind": "LexicalScope",
 		          "declaringNode": null,
 		          "identifier": "readWebkitEntriesAsync",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "webKitFileEntryFileAsync" => Object {
+		        "webKitFileEntryFileAsync" => {
 		          "bindingScopeKind": "LexicalScope",
 		          "declaringNode": null,
 		          "identifier": "webKitFileEntryFileAsync",
 		          "mutability": "Immutable",
 		          "references": null,
 		        },
-		        "MutationManager" => Object {
+		        "MutationManager" => {
 		          "bindingScopeKind": "FunctionScope",
 		          "declaringNode": null,
 		          "identifier": "MutationManager",
@@ -1867,90 +1867,90 @@ describe('Simple tests', () => {
 		        },
 		      },
 		      "childScopes": null,
-		      "declaratingNode": null,
+		      "declaringNode": null,
 		      "parentScope": null,
-		      "references": Array [
-		        Object {
+		      "references": [
+		        {
 		          "identifier": "Error",
 		          "isInitializer": false,
 		          "referenceTo": null,
 		          "referencedFromScope": null,
 		          "writeExpr": null,
 		        },
-		        Object {
+		        {
 		          "identifier": "MANAGER_DISPOSED_ERROR",
 		          "isInitializer": true,
-		          "referenceTo": Object {},
+		          "referenceTo": {},
 		          "referencedFromScope": null,
 		          "writeExpr": null,
 		        },
-		        Object {
+		        {
 		          "identifier": "Notifications",
 		          "isInitializer": false,
-		          "referenceTo": Object {},
+		          "referenceTo": {},
 		          "referencedFromScope": null,
 		          "writeExpr": null,
 		        },
-		        Object {
+		        {
 		          "identifier": "notes",
 		          "isInitializer": true,
-		          "referenceTo": Object {},
+		          "referenceTo": {},
 		          "referencedFromScope": null,
 		          "writeExpr": null,
 		        },
-		        Object {
+		        {
 		          "identifier": "SECOND",
 		          "isInitializer": true,
-		          "referenceTo": Object {},
+		          "referenceTo": {},
 		          "referencedFromScope": null,
 		          "writeExpr": null,
 		        },
 		      ],
 		      "scopeKind": "FunctionScope",
 		    },
-		    "references": Array [],
+		    "references": [],
 		    "scopeKind": "FunctionScope",
 		  },
-		  "references": Array [
-		    Object {
+		  "references": [
+		    {
 		      "identifier": "directoryId",
 		      "isInitializer": false,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "directory",
 		      "isInitializer": true,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "directory",
 		      "isInitializer": false,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "file",
 		      "isInitializer": false,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "data",
 		      "isInitializer": true,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
-		    Object {
+		    {
 		      "identifier": "file",
 		      "isInitializer": false,
-		      "referenceTo": Object {},
+		      "referenceTo": {},
 		      "referencedFromScope": null,
 		      "writeExpr": null,
 		    },
